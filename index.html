@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bhanuaxx Live - Premium Network</title>
+    <style>
+      :root {
+        --bg-base: #070709;
+        --glass-bg: rgba(20, 22, 28, 0.4);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --accent-red: #ff2a2a;
+        --accent-blue: #00d2ff;
+        --text-main: #f4f4f5;
+        --text-muted: #a1a1aa;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", sans-serif;
+      }
+      body {
+        background-color: var(--bg-base);
+        color: var(--text-main);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        background: var(--glass-bg);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--glass-border);
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .brand {
+        font-size: 22px;
+        font-weight: 900;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .live-dot {
+        width: 10px;
+        height: 10px;
+        background-color: var(--accent-red);
+        border-radius: 50%;
+        animation: blink 1.5s infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+
+      .main-layout {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 20px;
+        padding: 20px;
+        max-width: 1920px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .video-container {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #000;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      .channel-selector {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+      }
+      .btn-channel {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--glass-border);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+        font-weight: bold;
+      }
+      .btn-channel.active {
+        background: var(--accent-red);
+        border-color: var(--accent-red);
+      }
+
+      .chat-section {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 100px);
+      }
+      .chat-header {
+        padding: 16px;
+        border-bottom: 1px solid var(--glass-border);
+        font-weight: 600;
+        background: rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: space-between;
+      }
+      .chat-messages {
+        flex-grow: 1;
+        padding: 16px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        font-size: 14px;
+      }
+
+      .msg {
+        display: flex;
+        gap: 10px;
+      }
+      .msg-user {
+        color: var(--accent-blue);
+        font-weight: bold;
+        white-space: nowrap;
+      }
+      .msg-bot {
+        color: var(--accent-red);
+        font-weight: bold;
+        white-space: nowrap;
+      }
+      .msg-text {
+        color: var(--text-main);
+        word-break: break-word;
+      }
+      .bot-bg {
+        background: rgba(255, 42, 42, 0.1);
+        padding: 8px;
+        border-radius: 6px;
+        border-left: 3px solid var(--accent-red);
+        margin-top: 5px;
+      }
+
+      .chat-input-area {
+        padding: 16px;
+        border-top: 1px solid var(--glass-border);
+        display: flex;
+        gap: 10px;
+      }
+      .chat-input {
+        flex-grow: 1;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--glass-border);
+        padding: 10px;
+        border-radius: 8px;
+        color: white;
+        outline: none;
+      }
+      .chat-btn {
+        background: var(--accent-blue);
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        color: black;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      /* =========================================
+         MEDIA QUERIES UNTUK RESPONSIVE (HP & TABLET) 
+         ========================================= */
+      @media screen and (max-width: 992px) {
+        .main-layout {
+          grid-template-columns: 1fr; /* Ubah layout jadi numpuk ke bawah */
+          padding: 15px;
+        }
+        
+        .chat-section {
+          height: 500px; /* Tinggi disesuaikan agar tidak kebesaran di HP */
+          margin-top: 20px;
+        }
+
+        .channel-selector {
+          flex-wrap: wrap; /* Tombol channel akan otomatis turun ke baris baru jika kepanjangan */
+        }
+
+        .btn-channel {
+          flex: 1 1 100%; /* Tombol memenuhi layar agar gampang dipencet */
+          text-align: center;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        header {
+          padding: 15px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 5px;
+        }
+        .brand {
+          font-size: 18px;
+        }
+        #match-title {
+          font-size: 16px !important;
+        }
+        .chat-section {
+          height: 450px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <div class="live-dot"></div>
+        BHANUAXX LIVE
+      </div>
+      <div style="color: var(--text-muted); font-size: 14px">
+        Broadcasting HD
+      </div>
+    </header>
+
+    <div class="main-layout">
+      <main class="stream-section">
+        <div class="video-container">
+          <iframe
+            id="main-player"
+            src="https://streams.esportex.site/player#ZW0vYndmMQ"
+            allowfullscreen="yes"
+          ></iframe>
+        </div>
+        <div class="channel-selector">
+          <button
+            class="btn-channel active"
+            id="btn-ch1"
+            onclick="
+              switchChannel(
+                'ch1',
+                'https://streams.esportex.site/player#ZW0vYndmMQ',
+                'Canada vs England (Badminton)'
+              )
+            "
+          >
+            Canada Open 2026: Badminton
+          </button>
+          <button
+            class="btn-channel"
+            id="btn-ch2"
+            onclick="
+              switchChannel(
+                'ch2',
+                'https://streams.esportex.site/player#djIvdWNsMg==',
+                'Belgia vs Senegal (World Cup 2026)'
+              )
+            "
+          >
+            World Cup 2026: Belgia vs Senegal
+          </button>
+        </div>
+        <h2 id="match-title" style="margin-top: 15px; font-size: 20px">
+          Canada vs England (Badminton)
+        </h2>
+      </main>
+
+      <aside class="chat-section">
+        <div class="chat-header">
+          <span>Live Chat 🔴</span>
+          <span
+            id="my-username"
+            style="font-size: 12px; color: var(--text-muted)"
+          ></span>
+        </div>
+        <div class="chat-messages" id="chat-box">
+          </div>
+        <div class="chat-input-area">
+          <input
+            type="text"
+            id="chat-input"
+            class="chat-input"
+            placeholder="Ketik pesan..."
+          />
+          <button class="chat-btn" id="send-btn">Kirim</button>
+        </div>
+      </aside>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+      import {
+        getDatabase,
+        ref,
+        push,
+        onChildAdded,
+      } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+      // =========================================================================
+      // WAJIB GANTI INI DENGAN CONFIG FIREBASE KAMU NANTI!
+      // =========================================================================
+      const firebaseConfig = {
+        apiKey: "AIzaSyBTGXc-A9hWNdp4NlYIO8H6eNVRalL8VoM",
+        authDomain: "bhanuaxx-live.firebaseapp.com",
+        databaseURL:
+          "https://bhanuaxx-live-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "bhanuaxx-live",
+        storageBucket: "bhanuaxx-live.firebasestorage.app",
+        messagingSenderId: "319213325249",
+        appId: "1:319213325249:web:f2378cdef7bd9f4287bd40",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      const chatRef = ref(db, "live-chats");
+
+      // Bikin username acak buat user yang nonton
+      const myUsername = "Viewer_" + Math.floor(Math.random() * 10000);
+      document.getElementById("my-username").innerText =
+        `Your ID: ${myUsername}`;
+
+      const chatBox = document.getElementById("chat-box");
+      const chatInput = document.getElementById("chat-input");
+      const sendBtn = document.getElementById("send-btn");
+
+      // Render Chat dari Database
+      onChildAdded(chatRef, (snapshot) => {
+        const data = snapshot.val();
+        const isBot = data.username === "BhanuBot";
+        const botStyle = isBot ? "bot-bg" : "";
+        const userClass = isBot ? "msg-bot" : "msg-user";
+
+        chatBox.innerHTML += `
+                <div class="msg ${botStyle}">
+                    <span class="${userClass}">${data.username}:</span>
+                    <span class="msg-text">${data.message}</span>
+                </div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      });
+
+      // Fungsi Kirim Pesan ke Database
+      function sendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        // Push pesan user ke Firebase
+        push(chatRef, { username: myUsername, message: text });
+        chatInput.value = "";
+
+        // Logika BhanuBot (Hanya berjalan di sisi user yang ngetik biar gak dobel)
+        setTimeout(() => {
+          let botReply = "";
+          let txtLower = text.toLowerCase();
+
+          if (
+            txtLower.includes("lag") ||
+            txtLower.includes("patah") ||
+            txtLower.includes("buffering")
+          ) {
+            botReply = `Koneksi lu aja yg ampas @${myUsername}, ganti provider sana 💀`;
+          } else if (txtLower.includes("skor") || txtLower.includes("brp")) {
+            botReply = `Mata lu kemana @${myUsername}? Liat aja di layar gede gitu wkwk.`;
+          }
+
+          if (botReply !== "") {
+            // Push balasan bot ke Firebase supaya semua orang baca
+            push(chatRef, { username: "BhanuBot", message: botReply });
+          }
+        }, 1000);
+      }
+
+      // Event Listener Tombol & Enter
+      sendBtn.addEventListener("click", sendMessage);
+      chatInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") sendMessage();
+      });
+
+      // Switch Channel UI Logic
+      window.switchChannel = function (id, url, title) {
+        // Ganti judul match
+        document.getElementById("match-title").innerText = title;
+
+        // Ganti warna tombol aktif
+        document
+          .querySelectorAll(".btn-channel")
+          .forEach((btn) => btn.classList.remove("active"));
+        document.getElementById("btn-" + id).classList.add("active");
+
+        // Trik jitu: Timpa ulang seluruh isi container agar iframe dipaksa reload 100%
+        const videoContainer = document.querySelector(".video-container");
+        videoContainer.innerHTML = `<iframe id="main-player" src="${url}" allowfullscreen="yes"></iframe>`;
+      };
+    </script>
+  </body>
+</html> 
